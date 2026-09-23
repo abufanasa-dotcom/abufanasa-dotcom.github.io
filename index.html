@@ -147,21 +147,21 @@
               <div class="project-field">
                 <div class="field-label" data-i18n="p1ProblemLabel">Problemstellung</div>
                 <div class="field-content" data-i18n="p1Problem">
-                  Erkennung chronischer Leistungsdefizite und unplausibler Betriebszustände in hochdimensionalen 10-Minuten-SCADA-Messreihen industrieller Windenergieanlagen ohne Verzerrung durch fehlerhafte Sensorereignisse.
+                  Erkennung anhaltender Leistungsabweichungen in hochdimensionalen 10-Minuten-SCADA-Messreihen industrieller Windenergieanlagen ohne Verzerrung durch fehlerhafte Sensorereignisse.
                 </div>
               </div>
 
               <div class="project-field">
                 <div class="field-label" data-i18n="p1ContributionLabel">Beitrag & Methoden</div>
                 <div class="field-content" data-i18n="p1Contribution">
-                  Analyse der Betriebsdaten von Turbine 1 des Kelmarsh-Windparks (52.560 Zeitschritte, 2022). Bereinigung und physikalische Plausibilitätsfilterung, Entwicklung eines Referenz-Leistungskurvenmodells nach Windgeschwindigkeitsklassen, Vergleich mit Regressionsmodellen (scikit-learn) sowie Aggregation persistenter Minderleistungsphasen. Bereitstellung eines interaktiven Streamlit-Dashboards zur strukturierten Ereignisinspektion.
+                  Plausibilitätsfilterung von 52.560 Zehn-Minuten-Zeitpunkten (Kelmarsh Turbine 1, 2022), Referenz-Leistungskurven-Binning nach Windgeschwindigkeitsklassen, Vergleich mit Regressionsmodellen und Bereitstellung eines interaktiven Streamlit-Dashboards zur Ereignisinspektion.
                 </div>
               </div>
 
               <div class="project-metrics">
                 <div class="metric-item">
                   <div class="metric-val" data-i18n="p1Metric1Val">52.560</div>
-                  <div class="metric-label" data-i18n="p1Metric1Lbl">10-Minuten-Zeitstempel (2022)</div>
+                  <div class="metric-label" data-i18n="p1Metric1Lbl">10-Minuten-Zeitpunkte (2022)</div>
                 </div>
                 <div class="metric-item">
                   <div class="metric-val" data-i18n="p1Metric2Val">2.050 kW</div>
@@ -176,7 +176,7 @@
               <div class="project-field">
                 <div class="field-label" data-i18n="p1ResultLabel">Ergebnis & Kennzahlen</div>
                 <div class="field-content" data-i18n="p1Result">
-                  Erfolgreiche Segmentierung von Ausfallzeiten und Identifikation konsistenter Minderleistungsintervalle zur Priorisierung technischer Vor-Ort-Überprüfungen.
+                  Erfolgreiche Segmentierung von Ausfallzeiten und Identifikation konsistenter Minderleistungsintervalle zur Priorisierung technischer Vor-Ort-Überprüfungen. Vollständige Methodik im Repository.
                 </div>
               </div>
 
@@ -224,36 +224,36 @@
               <div class="project-field">
                 <div class="field-label" data-i18n="p2ProblemLabel">Problemstellung</div>
                 <div class="field-content" data-i18n="p2Problem">
-                  Reine Arbitrage-Optimierungen im Day-Ahead-Strommarkt neigen dazu, Batteriespeicher selbst bei minimalen Preisspreads intensiv zu zyklisieren. Dies führt zu unverhältnismäßiger Zellalterung ohne substantiellen wirtschaftlichen Mehrwert.
+                  Reine Preisarbitrage im Day-Ahead-Strommarkt führt bei flachen Spreads zu unnötig intensiver Zyklisierung und beschleunigter Zellalterung ohne proportionalen wirtschaftlichen Mehrwert.
                 </div>
               </div>
 
               <div class="project-field">
                 <div class="field-label" data-i18n="p2ContributionLabel">Beitrag & Methoden</div>
                 <div class="field-content" data-i18n="p2Contribution">
-                  Ex-post techno-ökonomische Analyse eines netzgekoppelten 1 MW / 2 MWh Großspeichers anhand stündlicher SMARD-Strommarktdaten (Zone DE/LU, 8.784 Stunden im Kalenderjahr 2024). Formulierung eines Mixed-Integer Linear Program (MILP via SciPy/HiGHS) unter Berücksichtigung von Sommer-/Winterzeitwechseln, Lade-/Entladeeffizienzen (95 %) und SOC-Grenzbedingungen. Unabhängige physikalische Replay-Validierung (&lt; 10⁻¹⁰ EUR Diskrepanz) und Sensitivitätsanalyse über variierende Zyklenkostenansätze.
+                  Ex-post Dispatch-Modellierung eines netzgekoppelten 1 MW / 2 MWh Batteriespeichers anhand stündlicher SMARD-Strommarktdaten 2024 (DE/LU, 8.784 Stunden). Formulierung eines Mixed-Integer Linear Program (MILP via SciPy/HiGHS) mit Sommer-/Winterzeit-Umstellung, 95 % Wirkungsgrad, physikalischer Konsistenzprüfung und Zyklenkosten-Sensitivitätsanalyse.
                 </div>
               </div>
 
               <div class="project-metrics">
                 <div class="metric-item">
-                  <div class="metric-val" data-i18n="p2Metric1Val">8.784 Std.</div>
-                  <div class="metric-label" data-i18n="p2Metric1Lbl">SMARD-Marktdaten 2024 (DE/LU)</div>
+                  <div class="metric-val" data-i18n="p2Metric1Val">1 MW / 2 MWh</div>
+                  <div class="metric-label" data-i18n="p2Metric1Lbl">Modellierter Großspeicher</div>
                 </div>
                 <div class="metric-item">
-                  <div class="metric-val" data-i18n="p2Metric2Val">-32,44 % EFC</div>
-                  <div class="metric-label" data-i18n="p2Metric2Lbl">Zyklenreduktion durch Zyklenkosten</div>
+                  <div class="metric-val" data-i18n="p2Metric2Val">8.784 Std.</div>
+                  <div class="metric-label" data-i18n="p2Metric2Lbl">SMARD-Marktdaten 2024 (DE/LU)</div>
                 </div>
                 <div class="metric-item">
-                  <div class="metric-val" data-i18n="p2Metric3Val">+467 %</div>
-                  <div class="metric-label" data-i18n="p2Metric3Lbl">Simulierte Nettomarge vs. starrer Fahrplan</div>
+                  <div class="metric-val" data-i18n="p2Metric3Val">-32,44 % EFC</div>
+                  <div class="metric-label" data-i18n="p2Metric3Lbl">Zyklenreduktion durch Zyklenkosten</div>
                 </div>
               </div>
 
               <div class="project-field">
                 <div class="field-label" data-i18n="p2ResultLabel">Ergebnis & Kennzahlen</div>
                 <div class="field-content" data-i18n="p2Result">
-                  Simulierte Margen unter den definierten Kostenannahmen: Bei einem nominalen Zyklenkostenansatz von 20 €/MWh äquivalenter Zyklenenergie erzielte das Modell eine simulierte Nettomarge von 44.685,44 € bei 418,30 Vollzyklen (EFC). Gegenüber dem ungedämpften Modell sinkt die jährliche Zyklenbelastung um 32,44 % bei nur 5,26 % Erlösverzicht, während der erzielte Arbitragewert pro Vollzyklus von 104,72 €/EFC auf 146,83 €/EFC ansteigt. Vollständige Methodik im Repository.
+                  Simulierte Margen unter den definierten Kostenannahmen: Bei einem nominalen Zyklenkostenansatz von 20 €/MWh äquivalenter Zyklenenergie erzielte das Modell eine simulierte Nettomarge von 44.685,44 € bei 418,30 Vollzyklen (EFC), wodurch die jährliche Zyklenbelastung um 32,44 % bei nur 5,26 % Erlösverzicht sank. Vollständige Methodik im Repository.
                 </div>
               </div>
 
@@ -301,14 +301,14 @@
               <div class="project-field">
                 <div class="field-label" data-i18n="p3ProblemLabel">Problemstellung</div>
                 <div class="field-content" data-i18n="p3Problem">
-                  Widersprüchliche regulatorische Dosimetrie-Definitionen (3-dB-Energieäquivalenzprinzip nach NIOSH/ISO vs. 5-dB-Regelverdopplung nach OSHA), ausgeprägte physikalische Schiefe industrieller Schallenergie und Verzerrungen durch Mehrfachmessungen in Einzelbetrieben.
+                  Regulatorische Divergenz zwischen dem physikalischen 3-dB-Prinzip (NIOSH/ISO) und der 5-dB-Regel (OSHA) sowie extreme physikalische Schiefe industrieller Schallenergie in historischen Arbeitsplatzdaten.
                 </div>
               </div>
 
               <div class="project-field">
                 <div class="field-label" data-i18n="p3ContributionLabel">Beitrag & Methoden</div>
                 <div class="field-content" data-i18n="p3Contribution">
-                  Systematische Aufbereitung und quantitative Auswertung der historischen NIOSH Health Hazard Evaluation Datenbank (807 personenbezogene Dosimetriemessungen, 582 stationäre Schallpegelmessungen an 77 Betriebsstätten). Bereinigung von Formelfehlern historischer Erfasser ohne Datenverlust, statistische Analyse von 680 zeitgleichen Zweikanal-Messungen am selben Arbeitsplatz und internationaler Abgleich mit den Auslösewerten der deutschen LärmVibrationsArbSchV bzw. DIN EN ISO 9612.
+                  Zero-Loss-Datenaufbereitung der historischen NIOSH Health Hazard Evaluation Datenbank (807 Personendosimetrien, 582 Bereichsmessungen an 77 Betrieben), Bereinigung historischer Erfasserfehler, Analyse von 680 zeitgleichen Zweikanal-Schichten und Abgleich mit deutschen Auslösewerten (DIN EN ISO 9612).
                 </div>
               </div>
 
