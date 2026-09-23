@@ -34,7 +34,7 @@
       p1ContributionLabel: "Beitrag & Methoden",
       p1Contribution: "Plausibilitätsfilterung von 52.560 Zehn-Minuten-Zeitpunkten (Kelmarsh Turbine 1, 2022), Referenz-Leistungskurven-Binning nach Windgeschwindigkeitsklassen, Vergleich mit Regressionsmodellen und Bereitstellung eines interaktiven Streamlit-Dashboards zur Ereignisinspektion.",
       p1ResultLabel: "Ergebnis & Kennzahlen",
-      p1Result: "Erfolgreiche Segmentierung von Ausfallzeiten und Identifikation konsistenter Minderleistungsintervalle zur Priorisierung technischer Vor-Ort-Überprüfungen. Vollständige Methodik im Repository.",
+      p1Result: "Identifikation von fünf Kandidaten-Ereignissen anhaltender Leistungsabweichung für die weitere technische Prüfung.",
       p1Metric1Val: "52.560",
       p1Metric1Lbl: "10-Minuten-Zeitpunkte (2022)",
       p1Metric2Val: "2.050 kW",
@@ -48,9 +48,9 @@
       p2Tag: "Batteriespeicher & Energiemarkt",
       p2Title: "German BESS Dispatch & Degradation Analytics",
       p2ProblemLabel: "Problemstellung",
-      p2Problem: "Reine Preisarbitrage im Day-Ahead-Strommarkt führt bei flachen Spreads zu unnötig intensiver Zyklisierung und beschleunigter Zellalterung ohne proportionalen wirtschaftlichen Mehrwert.",
+      p2Problem: "Der Einsatz von Batteriespeichern erfordert eine Abwägung zwischen Arbitragemarge und Zyklenintensität. Dieses Projekt vergleicht einen starren Fahrplan mit optimiertem Dispatch unter verschiedenen angenommenen Zyklenkosten.",
       p2ContributionLabel: "Beitrag & Methoden",
-      p2Contribution: "Ex-post Dispatch-Modellierung eines netzgekoppelten 1 MW / 2 MWh Batteriespeichers anhand stündlicher SMARD-Strommarktdaten 2024 (DE/LU, 8.784 Stunden). Formulierung eines Mixed-Integer Linear Program (MILP via SciPy/HiGHS) mit Sommer-/Winterzeit-Umstellung, 95 % Wirkungsgrad, physikalischer Konsistenzprüfung und Zyklenkosten-Sensitivitätsanalyse.",
+      p2Contribution: "Ex-post Dispatch-Modellierung eines netzgekoppelten 1 MW / 2 MWh Batteriespeichers anhand stündlicher SMARD-Strommarktdaten 2024 (DE/LU, 8.784 Stunden). Formulierung eines Mixed-Integer Linear Program (MILP via SciPy/HiGHS) mit Sommer-/Winterzeit-Umstellung, 95 % Lade- und 95 % Entladewirkungsgrad (entsprechend 90,25 % Round-Trip-Wirkungsgrad), physikalischer Konsistenzprüfung und Zyklenkosten-Sensitivitätsanalyse.",
       p2ResultLabel: "Ergebnis & Kennzahlen",
       p2Result: "Simulierte Margen unter den definierten Kostenannahmen: Bei einem nominalen Zyklenkostenansatz von 20 €/MWh äquivalenter Zyklenenergie erzielte das Modell eine simulierte Nettomarge von 44.685,44 € bei 418,30 Vollzyklen (EFC), wodurch die jährliche Zyklenbelastung um 32,44 % bei nur 5,26 % Erlösverzicht sank. Vollständige Methodik im Repository.",
       p2Metric1Val: "1 MW / 2 MWh",
@@ -195,7 +195,7 @@
       p1ContributionLabel: "Contribution & Methodology",
       p1Contribution: "Plausibility screening of 52,560 ten-minute timestamps (Kelmarsh Turbine 1, 2022), reference power-curve binning, regression benchmarking, and building an interactive Streamlit dashboard for event inspection.",
       p1ResultLabel: "Key Findings & Metrics",
-      p1Result: "Successfully segmented curtailment intervals and isolated consistent underperformance events to prioritize targeted engineering field reviews. Full methodology documented in the repository.",
+      p1Result: "Identified five candidate sustained power-deviation events for further engineering review.",
       p1Metric1Val: "52,560",
       p1Metric1Lbl: "10-minute timestamps (2022)",
       p1Metric2Val: "2,050 kW",
@@ -209,9 +209,9 @@
       p2Tag: "Battery Energy Storage & Power Markets",
       p2Title: "German BESS Dispatch & Degradation Analytics",
       p2ProblemLabel: "Problem Definition",
-      p2Problem: "Price-blind arbitrage in day-ahead wholesale electricity markets causes aggressive battery cycling on shallow spreads, accelerating cell wear without proportional economic gain.",
+      p2Problem: "Battery dispatch involves a trade-off between arbitrage margin and cycling intensity. This project compares a fixed schedule with optimized dispatch under different assumed cycling costs.",
       p2ContributionLabel: "Contribution & Methodology",
-      p2Contribution: "Ex-post dispatch modeling of a grid-connected 1 MW / 2 MWh BESS using 2024 SMARD day-ahead electricity prices (DE/LU, 8,784 hours). Formulated a Mixed-Integer Linear Program (MILP via SciPy/HiGHS) with daylight-saving transitions, 95% efficiency, physical consistency checks, and degradation-cost sensitivity sweeps.",
+      p2Contribution: "Ex-post dispatch modeling of a grid-connected 1 MW / 2 MWh BESS using 2024 SMARD day-ahead electricity prices (DE/LU, 8,784 hours). Formulated a Mixed-Integer Linear Program (MILP via SciPy/HiGHS) with daylight-saving transitions, 95% charging efficiency and 95% discharging efficiency (equivalent to 90.25% round-trip efficiency), physical consistency checks, and degradation-cost sensitivity sweeps.",
       p2ResultLabel: "Key Findings & Metrics",
       p2Result: "Simulated margins under stated cost assumptions: Under a nominal cycling-cost assumption of €20/MWh-equivalent-cycle-energy, the model produced a simulated net margin of €44,685.44 across 418.30 equivalent full cycles (EFC), dampening annual cycling by 32.44% while sacrificing only 5.26% gross revenue. Full methodology documented in the repository.",
       p2Metric1Val: "1 MW / 2 MWh",
@@ -369,8 +369,10 @@
   // Initialize
   function init() {
     // 1. Language Setup
+    const urlParams = new URLSearchParams(window.location.search);
+    const langParam = urlParams.get('lang');
     const storedLang = localStorage.getItem('portfolio_lang');
-    const initialLang = (storedLang === 'en' || storedLang === 'de') ? storedLang : 'de';
+    const initialLang = (langParam === 'en' || langParam === 'de') ? langParam : ((storedLang === 'en' || storedLang === 'de') ? storedLang : 'de');
     
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.addEventListener('click', function () {
