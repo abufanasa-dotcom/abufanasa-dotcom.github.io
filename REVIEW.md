@@ -90,3 +90,12 @@ Theme implementation references:
 - BESS README still states 5.26%; the full-precision CSV calculation gives 5.27%, as already implemented on the website and CV. Other repositories were not edited.
 - Added .nojekyll for direct static GitHub Pages deployment. Confirmed existing site repository main commit 592583e75c672b68f0d6e392acd7796df8171364; main tree 90c36b7c39b79baef58419d9b687dc01f9fda7e4.
 - Preparation targets a separate release branch and draft PR. Do not merge or publish the legal drafts before the owner supplies suitable public operator/address details and confirms email processing/retention wording. This is a missing-information step, not a request to reapprove the already accepted design.
+
+
+## Release completion — 1 October 2026
+
+- Owner supplied and explicitly authorized the operator's public address for the legal notice and accepted a maximum of six months after ordinary contact/job enquiries close, with earlier deletion when unnecessary. Active enquiries continue during handling; contracts, legal duties and necessary legal-claims records are separate. This is an actual mailbox practice, not an automatic website deletion function.
+- Completed operator/contact, hosting basis, local theme setting, Gmail use, retention, external links and data-subject rights sections; removed draft placeholders. Kept noindex on legal pages and their exclusion from the portfolio sitemap. No legal certification claimed.
+- The address is authorized on the legal pages. The main contact sections and public CV retain city-only location and omit phone/disability details. Privacy checks distinguish legal publication from CV/homepage privacy.
+- Documented manual project updates and publishing-branch redeployment. Changed the local HTTP checker to use Python's built-in temporary server, so repository checkouts do not require the excluded local Node preview helper.
+- Scientific values, work history, bilingual portfolio layout, CSS, interaction code, original figures and public PDF were not changed by legal completion.

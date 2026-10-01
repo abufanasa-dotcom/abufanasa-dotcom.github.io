@@ -1,11 +1,11 @@
 # Ahmed Abufanas — Portfolio V2
 
-Review package updated **1 October 2026**. Static bilingual portfolio for engineering recruiters. The accepted redesign is prepared for a separate release review branch. The published main branch is not changed during preparation.
+Review package updated **1 October 2026**. Static bilingual portfolio for engineering recruiters. Approved bilingual redesign with compact contact actions and system-based light/dark themes. Release changes are reviewed through pull requests before merging into the main publishing branch.
 
 ## المعاينة على جهازك
 
 1. فك الضغط داخل **مجلد جديد**؛ احتفظ بمجلد الموقع المنشور دون تعديل.
-2. شغّل `START_PREVIEW.cmd` على Windows إذا كان Node.js مثبتًا، ثم افتح http://127.0.0.1:8080/ . أوقف الخادم بـ Ctrl+C. إذا كان المنفذ مشغولًا، أغلق خادم المعاينة القديم أولًا.
+2. من مجلد المشروع شغّل `python -m http.server 8080 --bind 127.0.0.1` إذا كان Python مثبتًا، ثم افتح http://127.0.0.1:8080/ . أوقف الخادم بـ Ctrl+C. ملف `START_PREVIEW.cmd` بديل متاح في الأرشيف المحلي فقط إذا كان Node.js مثبتًا.
 3. جرّب النسخة الألمانية والإنجليزية، صفحات المشاريع، تكبير الرسوم، تنزيل السيرة، ونسخ البريد. يمكن فتح `index.html` مباشرة أيضًا؛ عند منع المتصفح النسخ إلى الحافظة يظهر بديل نصي واضح.
 
 German: `index.html`. English: `en/index.html`. The English download button explicitly identifies the CV as German.
@@ -27,13 +27,13 @@ Contact cards now use compact horizontal icon/title rows, concise descriptors an
 - `js/theme-init.js`: restores a saved light/dark preference before CSS loads, otherwise follows the device preference.
 - `assets/images/projects/`: original PNG figures and smaller 800/1200px WebP derivatives; original figures open on enlargement. No chart data or labels were rewritten.
 - `assets/docs/`: revised public German CV (two pages).
-- `legal/`: **local-review drafts**. Private residential address removed. Do not publish these as a completed legal notice or privacy policy; resolve suitable required operator/address details and email-processing information first.
-- `sitemap.xml`, `robots.txt`: indexable portfolio URLs and crawler configuration. Legal drafts are marked noindex.
+- `legal/`: operator address explicitly authorized for publication, technical hosting/function disclosures, Gmail contact handling and the approved six-month maximum for ordinary closed enquiries. Contracts, legal duties and necessary rights-related records are treated separately. These pages are not presented as legally certified.
+- `sitemap.xml`, `robots.txt`: indexable portfolio URLs and crawler configuration. Legal pages are marked noindex.
 - `scripts/build.py`: shared bilingual content, work history, project metrics, HTML generation and metadata.
 - `scripts/build_cv.py`: CV generation from the same work history and metrics.
 - `scripts/check.py`: local references, HTML structure, hreflang, privacy, numeric consistency and PDF checks.
 - `scripts/check_interactions.cjs`: simulated-DOM checks of application behavior; not a browser test.
-- `scripts/check_http.py`: temporary local HTTP server and asset/MIME checks.
+- `scripts/check_http.py`: standalone Python temporary HTTP server and asset/MIME checks; no local Node server file required.
 
 Edit `scripts/build.py`, then run `python scripts/build.py`; generated pages should not be edited separately. Image derivatives and their manifest are supplied, so HTML generation needs only Python's standard library.
 
@@ -49,10 +49,14 @@ python scripts/check_http.py
 
 These are maintenance tools. Visitors need no build system or dependencies.
 
-## Before publishing
+## Updating projects and publishing
 
-See `REVIEW.md` for the source record and precise verification scope. Website rendering, native keyboard/focus behavior, overflow and real clipboard permissions still need browser review at 1440×900, 1366×768, 768px and 375–390px widths.
+Uploading a repository to the GitHub profile does not automatically alter this website. Project content is maintained in `scripts/build.py`: bilingual project data, contribution summaries, card metrics and dedicated case-study content. New projects require reviewed German and English copy, verified numbers, repository/demo links and genuine figures. Update the relevant templates for the new project; the card metric logic is specific to the three current projects rather than a generic repository feed. Add responsive images and their dimensions to the image manifest. Update the public CV when relevant; the source CV stays private.
 
-Keep the existing GitHub repository and Pages configuration. After visual review and completion of the legal pages, copy changes into a review branch of the existing repository, inspect the diff, and publish only when approved. This archive contains no Git history or private original CV.
+After editing, generate the HTML and run the checks listed above. Review the changes on a branch, then merge the approved pull request into `main`. The existing GitHub Pages publishing source uses the main branch root. Pages redeploys after publishing-branch changes; a push to a separate scientific repository does not trigger a portfolio content update.
 
-Deployment assets: `index.html`, `en/`, `projects/`, `css/`, `js/`, `assets/`, `legal/`, `sitemap.xml`, `robots.txt`. The server, scripts and review notes are local maintenance files.
+For routine maintenance, clone the existing repository rather than copying a ZIP over an older working tree. Keep the legal contact address current and implement the described retention practice in the mailbox; the website has no email-deletion service.
+
+Deployment assets: `.nojekyll`, `index.html`, `en/`, `projects/`, `css/`, `js/`, `assets/`, `legal/`, `sitemap.xml`, `robots.txt`. Scripts and review notes are maintenance source files, not browser application code.
+
+See `REVIEW.md` for source comparisons and the precise limits of completed checks. No legal or accessibility certification is claimed.

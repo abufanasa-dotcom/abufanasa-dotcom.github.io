@@ -43,8 +43,13 @@ for p,q in pages.items():
  if q.stack:errors.append(name+': unclosed tags')
  if lang not in ('de','en'):errors.append(name+': missing language')
  if not q.find('meta',name='description') or not q.find('meta',name='viewport'):errors.append(name+': missing metadata')
- for forbidden in ('5,26','5.26','C1 pending','C1 in Klärung','B2.1','Gesamtnote','Oster'+'kampsweg','015'+'20','Schwer'+'behinderung','nach IEC 61400','$$'):
+ for forbidden in ('5,26','5.26','C1 pending','C1 in Klärung','B2.1','Gesamtnote','015'+'20','Schwer'+'behinderung','nach IEC 61400','$$'):
   if forbidden in raw:errors.append(name+': stale/private '+forbidden)
+ if 'legal' not in p.parts and 'Oster'+'kampsweg' in raw:errors.append(name+': address outside authorized legal pages')
+ if 'legal' in p.parts:
+  if 'Oster'+'kampsweg 70' not in raw or '26131 Oldenburg' not in raw:errors.append(name+': missing approved operator address')
+  if any(x in raw for x in ('Entwurf','vor Veröffentlichung zu ergänzen','vor der Veröffentlichung zu klären')):errors.append(name+': unfinished legal text')
+  if p.name=='datenschutz.html' and 'spätestens sechs Monate nach Abschluss' not in raw:errors.append(name+': missing approved retention policy')
  for tag,a in q.nodes:
   refs=[]
   if tag in ('a','link','script','img'):
@@ -82,7 +87,7 @@ for p,q in pages.items():
  for a in q.classes('menu-toggle'):
   if 'hidden' not in a or a.get('aria-controls')!='navigation':errors.append(name+': progressive menu')
  if p.name=='index.html':
-  if len(q.classes('metric'))!=3 or len(q.classes('contribution'))!=3:errors.append(name+': project evidence')
+  if len(q.classes('metric'))!=len(PROJECTS) or len(q.classes('contribution'))!=len(PROJECTS):errors.append(name+': project evidence')
   if len(q.classes('contact-option'))!=3 or len(q.classes('contact-resume'))!=1:errors.append(name+': contact cards')
   if len(q.find('a',download='Ahmed_Abufanas_Lebenslauf.pdf'))!=2:errors.append(name+': CV actions')
   if not q.schemas or q.schemas[0]['mainEntity']['name']!='Ahmed Abufanas':errors.append(name+': profile schema')
@@ -105,7 +110,7 @@ assert margin.quantize(Decimal('.01'),rounding=ROUND_HALF_UP)==Decimal('5.27')
 ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
 sitemap=ET.parse(ROOT/'sitemap.xml')
 locations=[x.text for x in sitemap.findall('.//s:loc',ns)]
-if len(locations)!=8:errors.append('sitemap count')
+if len(locations)!=2+2*len(PROJECTS):errors.append('sitemap count')
 for u in locations:
  path=ROOT/(urlsplit(u).path.lstrip('/') or 'index.html')
  if not path.exists():errors.append('sitemap missing '+u)
