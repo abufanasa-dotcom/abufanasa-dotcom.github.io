@@ -1,111 +1,58 @@
-# Ahmed Abufanas - Professional Engineering Portfolio
+# Ahmed Abufanas — Portfolio V2
 
-Professional, accessible, and high-performance engineering portfolio website built for real-world online use and deployed via **GitHub Pages** (`abufanasa-dotcom.github.io`).
+Review package updated **1 October 2026**. Static bilingual portfolio for engineering recruiters. The accepted redesign is prepared for a separate release review branch. The published main branch is not changed during preparation.
 
-## Overview & Architecture
+## المعاينة على جهازك
 
-- **Technology**: Semantic HTML5, Modern Vanilla CSS (custom design system, responsive clamp, CSS Grid/Flexbox), and lightweight Vanilla JavaScript. Zero external runtime libraries or build dependencies.
-- **Languages**: Bilingual support with German (default, `de`) and English (`en`), switchable instantly via header toggle without page reloads.
-- **Accessibility & Contrast**: Built to WCAG AA/AAA guidelines with visible keyboard focus rings (`:focus-visible`), skip-to-content links, semantic landmark roles, and ARIA modal dialogs.
-- **Privacy & Compliance**: German legal notice (§ 5 DDG *Impressum*) and GDPR (*Datenschutzerklärung*) compliant with zero external trackers, analytics, or cookies.
+1. فك الضغط داخل **مجلد جديد**؛ احتفظ بمجلد الموقع المنشور دون تعديل.
+2. شغّل `START_PREVIEW.cmd` على Windows إذا كان Node.js مثبتًا، ثم افتح http://127.0.0.1:8080/ . أوقف الخادم بـ Ctrl+C. إذا كان المنفذ مشغولًا، أغلق خادم المعاينة القديم أولًا.
+3. جرّب النسخة الألمانية والإنجليزية، صفحات المشاريع، تكبير الرسوم، تنزيل السيرة، ونسخ البريد. يمكن فتح `index.html` مباشرة أيضًا؛ عند منع المتصفح النسخ إلى الحافظة يظهر بديل نصي واضح.
 
----
+German: `index.html`. English: `en/index.html`. The English download button explicitly identifies the CV as German.
 
-## File Structure
+## Light / dark theme
 
-```
-.
-├── index.html                   # Main bilingual portfolio page
-├── css/
-│   └── style.css                # Polished light design system & responsive layout
-├── js/
-│   └── main.js                  # Language toggling, mobile nav, and accessible modal handling
-├── assets/
-│   ├── images/
-│   │   ├── ahmed-abufanas.jpg   # High-resolution web-optimized portrait (~60 KB)
-│   │   ├── ahmed-abufanas-orig.png # Full original resolution image
-│   │   └── favicon.svg          # Minimalist engineering SVG icon
-│   └── docs/
-│       └── Ahmed_Abufanas_Lebenslauf.pdf # Downloadable verified PDF résumé
-├── legal/
-│   ├── impressum.html           # Standalone German Impressum
-│   └── datenschutz.html         # Standalone GDPR Privacy Policy
-├── README.md                    # Project documentation & deployment guide
-└── .gitignore                   # Git hygiene
-```
+The circular sun/moon control is available in the header of every page, in both languages. On the first visit the site follows the device's light/dark preference. Clicking the control overrides the automatic choice and stores only `light` or `dark` under `aa-portfolio-theme` in localStorage; no preference is transmitted to a server. System changes continue to apply until the visitor makes an explicit choice. Clearing site storage returns to automatic behavior. The preference follows language/page navigation on the same origin and synchronizes across open tabs.
 
----
+If storage is blocked, the control still works for the current page. Use the HTTP preview for dependable cross-page behavior; storage behavior on directly opened file:// pages varies by browser. Original charts, portrait and CV retain their colors. Printing uses a light palette. Without JavaScript, CSS follows the device preference and the manual toggle stays hidden.
 
-## Featured Engineering Projects
+Contact cards now use compact horizontal icon/title rows, concise descriptors and 18px desktop padding. The CV action sits beside the contact heading on desktop and moves below the introduction at smaller widths. There is no fixed clipping height; cards grow when text or clipboard feedback wraps.
 
-1. **[Wind Turbine Performance Review](https://github.com/abufanasa-dotcom/wind-turbine-performance)**
-   - Historical SCADA analysis (Kelmarsh turbine 1, 52,560 timestamps in 2022).
-   - Baseline binned power curve modeling, ML regression benchmarking, and sustained-deviation review.
-   - Interactive Streamlit app: [abufanasa-dotcom-wind-turbine-performance-app-vtq3j5.streamlit.app](https://abufanasa-dotcom-wind-turbine-performance-app-vtq3j5.streamlit.app/)
-2. **[German BESS Dispatch & Degradation Analytics](https://github.com/abufanasa-dotcom/bess-dispatch-analytics)**
-   - Ex-post techno-economic evaluation of a 1 MW / 2 MWh battery in the German/Luxembourg day-ahead electricity market (8,784 hourly intervals in 2024).
-   - SciPy/HiGHS MILP optimizer, daylight-saving transitions, independent physical replay validation, and degradation-cost sensitivity sweeps.
-3. **[Industrial Noise Exposure Analysis](https://github.com/abufanasa-dotcom/industrial-noise-exposure)**
-   - Quantitative evaluation of the historical NIOSH Health Hazard Evaluation noise database (807 personal dosimetry records, 582 area surveys across 77 facilities).
-   - Compiler formula corrections, empirical NIOSH (3 dB) vs. OSHA (5 dB) divergence, and benchmarking against German noise safety standards (DIN EN ISO 9612 / LärmVibrationsArbSchV).
+## Structure and maintenance
 
----
+- `index.html`, `en/index.html`: homepages with three project summaries, linked experience, skills and contact cards.
+- `projects/`, `en/projects/`: three project studies per language.
+- `css/style.css`: one consolidated stylesheet, desktop project rows, responsive layouts, visible focus indicators and reduced-motion support.
+- `js/main.js`: progressive navigation, current-section language links, native chart dialog, clipboard feedback/fallback and theme control.
+- `js/theme-init.js`: restores a saved light/dark preference before CSS loads, otherwise follows the device preference.
+- `assets/images/projects/`: original PNG figures and smaller 800/1200px WebP derivatives; original figures open on enlargement. No chart data or labels were rewritten.
+- `assets/docs/`: revised public German CV (two pages).
+- `legal/`: **local-review drafts**. Private residential address removed. Do not publish these as a completed legal notice or privacy policy; resolve suitable required operator/address details and email-processing information first.
+- `sitemap.xml`, `robots.txt`: indexable portfolio URLs and crawler configuration. Legal drafts are marked noindex.
+- `scripts/build.py`: shared bilingual content, work history, project metrics, HTML generation and metadata.
+- `scripts/build_cv.py`: CV generation from the same work history and metrics.
+- `scripts/check.py`: local references, HTML structure, hreflang, privacy, numeric consistency and PDF checks.
+- `scripts/check_interactions.cjs`: simulated-DOM checks of application behavior; not a browser test.
+- `scripts/check_http.py`: temporary local HTTP server and asset/MIME checks.
 
-## Local Preview & Verification
+Edit `scripts/build.py`, then run `python scripts/build.py`; generated pages should not be edited separately. Image derivatives and their manifest are supplied, so HTML generation needs only Python's standard library.
 
-To run and preview the site locally using Node.js:
+PDF maintenance requires Python, reportlab and DejaVu Sans fonts. Set `FONT_DIR` to the folder containing `DejaVuSans.ttf` and `DejaVuSans-Bold.ttf` on Windows, then run `python scripts/build_cv.py`. Never replace the public CV with the unredacted original.
 
-```powershell
-# Using Python (if available):
-python -m http.server 8000
+Validation requires pypdf for the CV check:
 
-# Or using Node.js npx:
-npx http-server . -p 8000
-```
-Open `http://localhost:8000` in your browser.
-
----
-
-## Deployment to GitHub Pages (`abufanasa-dotcom.github.io`)
-
-Because this repository is named after your GitHub username, it serves as your primary user website.
-
-### Step 1: Initialize Git Repository
-In your PowerShell terminal inside this folder (`c:\Users\PC\Desktop\Ahmed_Protfolie`):
-
-```powershell
-git init
-git add .
-git commit -m "Initial commit: professional engineering portfolio website"
+```text
+python scripts/check.py
+node scripts/check_interactions.cjs
+python scripts/check_http.py
 ```
 
-### Step 2: Create Remote Repository on GitHub
-1. Log in to [GitHub](https://github.com/).
-2. Create a new repository named exactly:
-   ```
-   abufanasa-dotcom.github.io
-   ```
-3. Set the visibility to **Public** (do not initialize with a README, .gitignore, or license as they are already created here).
+These are maintenance tools. Visitors need no build system or dependencies.
 
-### Step 3: Link and Push
-```powershell
-git branch -M main
-git remote add origin https://github.com/abufanasa-dotcom/abufanasa-dotcom.github.io.git
-git push -u origin main
-```
+## Before publishing
 
-### Step 4: Verify GitHub Pages Activation
-1. In your GitHub repository, navigate to **Settings** > **Pages**.
-2. Under **Build and deployment** > **Source**, ensure `Deploy from a branch` is selected with branch `main` and folder `/ (root)`.
-3. Within 1-2 minutes, your website will be live at:
-   ```
-   https://abufanasa-dotcom.github.io/
-   ```
+See `REVIEW.md` for the source record and precise verification scope. Website rendering, native keyboard/focus behavior, overflow and real clipboard permissions still need browser review at 1440×900, 1366×768, 768px and 375–390px widths.
 
----
+Keep the existing GitHub repository and Pages configuration. After visual review and completion of the legal pages, copy changes into a review branch of the existing repository, inspect the diff, and publish only when approved. This archive contains no Git history or private original CV.
 
-## How to Update Content
-
-- **Updating the Résumé:** Replace `assets/docs/Ahmed_Abufanas_Lebenslauf.pdf` with your new PDF export. Commit and push.
-- **Adding or Editing Projects:** Edit the project articles in `index.html` and their corresponding text keys in `js/main.js`.
-- **Styling Changes:** Adjust CSS custom variables (`:root`) in `css/style.css`.
+Deployment assets: `index.html`, `en/`, `projects/`, `css/`, `js/`, `assets/`, `legal/`, `sitemap.xml`, `robots.txt`. The server, scripts and review notes are local maintenance files.
