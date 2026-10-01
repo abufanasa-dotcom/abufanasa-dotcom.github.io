@@ -1,31 +1,9 @@
-# Private documents, original CV, high-res photos, and snapshots
 _private/
-
-# Local preview server
-serve.js
-
-# OS generated files
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-.DS_Store
-
-# Editor directories and files
-.idea/
-.vscode/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Node modules & temporary caches
+__pycache__/
+*.pyc
+.env
+.env.*
 node_modules/
-npm-debug.log*
-.npm/
-
-# Scratch & temporary files
-scratch/
-temp/
-*.log
+.venv/
+.DS_Store
+Thumbs.db

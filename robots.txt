@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://abufanasa-dotcom.github.io/sitemap.xml

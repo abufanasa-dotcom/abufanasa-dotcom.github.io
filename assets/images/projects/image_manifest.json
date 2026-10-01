@@ -1,0 +1,26 @@
+{
+  "wind_measured_vs_estimated.png": {
+    "width": 2160,
+    "height": 1260,
+    "sizes": [
+      800,
+      1200
+    ]
+  },
+  "bess_dispatch_soc_schedule.png": {
+    "width": 3000,
+    "height": 2550,
+    "sizes": [
+      800,
+      1200
+    ]
+  },
+  "noise_niosh_dose_distribution.png": {
+    "width": 2700,
+    "height": 1650,
+    "sizes": [
+      800,
+      1200
+    ]
+  }
+}
