@@ -74,7 +74,7 @@ p { color: var(--muted); }
 .availability { display: flex; gap: 10px; align-items: flex-start; margin-top: 22px; font-size: 14px; line-height: 1.65; }
 .availability > span:first-child { width: 7px; height: 7px; margin-top: 8px; border-radius: 50%; background: #398373; flex-shrink: 0; }
 .portrait { width: min(100%,340px); justify-self: end; border: 1px solid var(--subtle-border); border-radius: 12px; overflow: hidden; box-shadow: 0 12px 32px #172c3d0d; }
-.portrait img { width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
+.portrait img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: center top; }
 .proof { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 22px; padding-block: 17px; border-block: 1px solid var(--line); font-size: 14px; }
 .proof p { font-size: 12px; letter-spacing: .04em; }
 .proof a:hover, .back-link:hover { text-decoration: underline; text-underline-offset: 4px; }
