@@ -54,8 +54,10 @@ p { color: var(--muted); }
 .brand-caption { font-size: 14px; font-weight: 650; line-height: 1.4; }
 .brand-caption small { color: var(--muted); font-size: 12px; font-weight: 400; }
 #navigation { margin-left: auto; display: flex; align-items: center; gap: 22px; font-size: 14px; font-weight: 550; }
-#navigation > a { padding-block: 10px; }
-#navigation > a[aria-current="location"] { color: var(--blue); text-decoration: underline; text-underline-offset: 7px; }
+#navigation > a { position: relative; padding-block: 10px; }
+#navigation > a::after { content: ""; position: absolute; inset-inline: 0; bottom: 5px; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 180ms ease-out; }
+#navigation > a[aria-current="location"] { color: var(--blue); }
+#navigation > a[aria-current="location"]::after, #navigation > a:focus-visible::after { transform: scaleX(1); }
 .social-nav { display: flex; gap: 16px; padding-left: 22px; border-left: 1px solid var(--line); color: var(--muted); }
 .language { display: grid; place-items: center; min-width: 44px; min-height: 44px; border: 1px solid var(--button-border); border-radius: 50%; font-size: 13px; }
 .menu-toggle { display: none; border: 1px solid var(--button-border); background: var(--paper); border-radius: 4px; min-height: 44px; padding: 8px 14px; }
@@ -71,6 +73,14 @@ p { color: var(--muted); }
 .primary { background: var(--primary-bg); border-color: var(--primary-bg); color: var(--primary-ink); }
 .primary:hover { background: var(--primary-hover); color: var(--primary-ink); }
 .secondary:hover { background: var(--wash); }
+/* Small, pointer-only lift; touch and reduced-motion users keep stable targets. */
+.button, a.contact-option, .contact-action, .copy-email { transition: transform 180ms ease-out, background-color 180ms ease-out, border-color 180ms ease-out; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .button:hover, a.contact-option:hover, .contact-action:hover, .copy-email:hover { transform: translateY(-2px); }
+}
+@media (hover: hover) and (pointer: fine) {
+  #navigation > a:hover::after { transform: scaleX(1); }
+}
 .availability { display: flex; gap: 10px; align-items: flex-start; margin-top: 22px; font-size: 14px; line-height: 1.65; }
 .availability > span:first-child { width: 7px; height: 7px; margin-top: 8px; border-radius: 50%; background: #398373; flex-shrink: 0; }
 .portrait { width: min(100%,340px); justify-self: end; border: 1px solid var(--subtle-border); border-radius: 12px; overflow: hidden; box-shadow: 0 12px 32px #172c3d0d; }
@@ -128,7 +138,7 @@ figcaption { color: var(--muted); font-size: 14px; line-height: 1.55; margin-top
 .contact-heading h2 { font-size: clamp(28px,2.5vw,33px); }
 .contact-intro { font-size: 16px; max-width: 65ch; margin-top: 10px; }
 .contact-options { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 14px; }
-.contact-option { display: flex; flex-direction: column; align-items: flex-start; min-height: 146px; padding: 18px; background: var(--paper); border: 1px solid var(--subtle-border); border-radius: 8px; min-width: 0; transition: border-color .15s; }
+.contact-option { display: flex; flex-direction: column; align-items: flex-start; min-height: 146px; padding: 18px; background: var(--paper); border: 1px solid var(--subtle-border); border-radius: 8px; min-width: 0; }
 a.contact-option:hover { border-color: var(--strong-line); }
 .contact-top { display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; }
 .contact-symbol { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; color: var(--blue); background: var(--icon-bg); border: 1px solid var(--icon-border); border-radius: 7px; font-size: 17px; font-weight: 650; }
@@ -152,6 +162,16 @@ a.contact-option:hover { border-color: var(--strong-line); }
 .footer a { padding-block: 6px; }
 dialog { background: var(--paper); color: var(--ink); width: min(1200px,94vw); max-height: 94vh; padding: 22px; border: 1px solid var(--line); border-radius: 8px; overflow: auto; box-shadow: 0 20px 100px #172c3d40; }
 dialog::backdrop { background: #172c3dcc; }
+/* Native dialog retains its focus/Escape behavior. Older browsers open instantly. */
+@supports (transition-behavior: allow-discrete) {
+  #chart-dialog { opacity: 0; transition: opacity 200ms ease-out, display 200ms allow-discrete, overlay 200ms allow-discrete; }
+  #chart-dialog[open] { opacity: 1; }
+  #chart-dialog::backdrop { opacity: 0; transition: opacity 200ms ease-out, display 200ms allow-discrete, overlay 200ms allow-discrete; }
+  #chart-dialog[open]::backdrop { opacity: 1; }
+  @starting-style {
+    #chart-dialog[open], #chart-dialog[open]::backdrop { opacity: 0; }
+  }
+}
 .dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .dialog-header h2 { font-size: 22px; }
 .dialog-close { min-height: 44px; background: var(--paper); border: 1px solid var(--button-border); border-radius: 4px; padding: 8px 16px; }
@@ -247,6 +267,7 @@ td { font-variant-numeric: tabular-nums; font-weight: 650; color: var(--blue); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
+  #chart-dialog, #chart-dialog::backdrop { transition: none !important; }
 }
 @media print {
   .site-header, .footer, dialog, .actions, .back-link, .zoom-label, .contact { display: none !important; }
