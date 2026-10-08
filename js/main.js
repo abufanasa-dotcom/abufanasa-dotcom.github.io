@@ -108,6 +108,41 @@
     dialog.addEventListener('close', () => chartTrigger?.focus());
   }
 
+  const contactDialog = document.querySelector('#contact-dialog');
+  let contactTrigger;
+  if (contactDialog && typeof contactDialog.showModal === 'function') {
+    document.querySelectorAll('[data-contact]').forEach(anchor => {
+      anchor.setAttribute('aria-haspopup', 'dialog');
+      anchor.setAttribute('aria-controls', 'contact-dialog');
+      anchor.addEventListener('click', event => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        contactTrigger = anchor;
+        const email = contactDialog.querySelector('.copy-email').dataset.email;
+        const subject = anchor.dataset.subject || '';
+        const gmail = new URL('https://mail.google.com/mail/');
+        gmail.searchParams.set('view', 'cm');
+        gmail.searchParams.set('fs', '1');
+        gmail.searchParams.set('to', email);
+        if (subject) gmail.searchParams.set('su', subject);
+        contactDialog.querySelector('[data-gmail]').setAttribute('href', gmail.href);
+        contactDialog.querySelector('[data-mail-app]').setAttribute('href', 'mailto:' + email + (subject ? '?subject=' + encodeURIComponent(subject) : ''));
+        const subjectLine = contactDialog.querySelector('.contact-subject');
+        subjectLine.textContent = (en ? 'Subject: ' : 'Betreff: ') + subject;
+        subjectLine.hidden = !subject;
+        contactDialog.querySelector('.copy-status').textContent = '';
+        contactDialog.showModal();
+      });
+    });
+    contactDialog.querySelector('.dialog-close').addEventListener('click', () => contactDialog.close());
+    contactDialog.addEventListener('click', event => {
+      if (event.target !== contactDialog) return;
+      const rect = contactDialog.getBoundingClientRect();
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) contactDialog.close();
+    });
+    contactDialog.addEventListener('close', () => contactTrigger?.focus());
+  }
+
   document.querySelector('.copy-email')?.addEventListener('click', async event => {
     const email = event.currentTarget.dataset.email;
     const status = document.querySelector('.copy-status');

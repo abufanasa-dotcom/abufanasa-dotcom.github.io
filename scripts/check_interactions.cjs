@@ -30,6 +30,12 @@ function setup(lang, nativeDialog=true, options={}) {
   const menu=new Element({'aria-expanded':'false'}), nav=new Element(), chart=new Element({href:'assets/images/projects/bess_dispatch_soc_schedule.png'});
   const dialog=new Element(), img=new Element(), caption=new Element(), close=new Element(), status=new Element();
   const copy=new Element();copy.dataset.email='abufanasa@gmail.com';
+  const contactDialog=new Element(), contactClose=new Element(), gmail=new Element(), mailApp=new Element(), subjectLine=new Element();
+  const contactTrigger=new Element({href:'mailto:abufanasa@gmail.com'}), generalContact=new Element({href:'mailto:abufanasa@gmail.com'});
+  contactTrigger.dataset.subject='Question: BESS & Wind / ä';
+  contactDialog.children={'.dialog-close':contactClose,'.copy-email':copy,'.copy-status':status,'[data-gmail]':gmail,'[data-mail-app]':mailApp,'.contact-subject':subjectLine};
+  if(nativeDialog)contactDialog.showModal=()=>{contactDialog.open=true;};
+  contactDialog.close=()=>{contactDialog.open=false;void contactDialog.emit('close');};
   const language=new Element({href:'en/index.html'});
   const sections=['top','projects','experience','skills','contact'].map((id,i)=>{const el=new Element({id});el.top=(i-1)*800+100;return el;});
   const projectLink=new Element({href:'index.html#projects'}), contactLink=new Element({href:'index.html#contact'});
@@ -39,9 +45,9 @@ function setup(lang, nativeDialog=true, options={}) {
   dialog.children={'img':img,'#chart-dialog-caption':caption,'.dialog-close':close};
   if(nativeDialog)dialog.showModal=()=>{dialog.open=true;};
   dialog.close=()=>{dialog.open=false;void dialog.emit('close');};
-  const map={'.theme-toggle':themeButton,'meta[name="theme-color"]':themeMeta,'.menu-toggle':menu,'#navigation':nav,'#chart-dialog':dialog,'.copy-email':copy,'.copy-status':status,'.language':language};
+  const map={'#contact-dialog':contactDialog,'.theme-toggle':themeButton,'meta[name="theme-color"]':themeMeta,'.menu-toggle':menu,'#navigation':nav,'#chart-dialog':dialog,'.copy-email':copy,'.copy-status':status,'.language':language};
   doc.querySelector=s=>map[s] ?? null;
-  doc.querySelectorAll=s=>s==='[data-chart]'?[chart]:s==='main > section[id]'?sections:[];
+  doc.querySelectorAll=s=>s==='[data-contact]'?[contactTrigger,generalContact]:s==='[data-chart]'?[chart]:s==='main > section[id]'?sections:[];
   doc.getElementById=id=>sections.find(s=>s.id===id);doc.documentElement=root;
   const mq=new Element(), colorMQ=new Element();colorMQ.matches=Boolean(options.systemDark);
   win.matchMedia=query=>query.includes('prefers-color-scheme')?colorMQ:mq;
@@ -55,7 +61,7 @@ function setup(lang, nativeDialog=true, options={}) {
   const environment={document:doc,window:win,navigator,location,URL,IntersectionObserver:Observer};
   vm.runInNewContext(initSource,environment);const earlyTheme=root.getAttribute('data-theme');
   vm.runInNewContext(source,environment);
-  return {doc,win,root,menu,nav,chart,dialog,img,caption,close,status,copy,language,sections,projectLink,contactLink,mq,navigator,location,observer,themeButton,themeMeta,colorMQ,stored,earlyTheme};
+  return {contactDialog,contactClose,gmail,mailApp,subjectLine,contactTrigger,generalContact,doc,win,root,menu,nav,chart,dialog,img,caption,close,status,copy,language,sections,projectLink,contactLink,mq,navigator,location,observer,themeButton,themeMeta,colorMQ,stored,earlyTheme};
 }
 (async () => {
   for (const lang of ['de','en']) {
@@ -89,6 +95,19 @@ function setup(lang, nativeDialog=true, options={}) {
     await s.copy.emit('click',{currentTarget:s.copy});equal(s.navigator.copied,'abufanasa@gmail.com');equal(s.status.textContent,lang==='en'?'Email address copied.':'E-Mail-Adresse kopiert.');
     s.navigator.clipboard.writeText=async()=>{throw new Error('Denied');};
     await s.copy.emit('click',{currentTarget:s.copy});equal(s.status.textContent.includes('abufanasa@gmail.com'),true);
+    equal(s.contactTrigger.getAttribute('aria-haspopup'),'dialog');
+    prevented=false;await s.contactTrigger.emit('click',{preventDefault(){prevented=true;}});
+    equal(prevented,true);equal(s.contactDialog.open,true);
+    const compose=new URL(s.gmail.href);
+    equal(compose.origin,'https://mail.google.com');equal(compose.searchParams.get('to'),'abufanasa@gmail.com');
+    equal(compose.searchParams.get('su'),s.contactTrigger.dataset.subject);
+    equal(new URL(s.mailApp.href).searchParams.get('subject'),s.contactTrigger.dataset.subject);
+    equal(s.subjectLine.hidden,false);equal(s.status.textContent,'');
+    await s.contactClose.emit('click');equal(s.contactDialog.open,false);equal(s.contactTrigger.focused,true);
+    await s.generalContact.emit('click',{preventDefault(){}});
+    equal(new URL(s.gmail.href).searchParams.has('su'),false);equal(s.mailApp.getAttribute('href'),'mailto:abufanasa@gmail.com');equal(s.subjectLine.hidden,true);
+    await s.contactDialog.emit('click',{target:s.contactDialog,clientX:1,clientY:1});equal(s.contactDialog.open,false);equal(s.generalContact.focused,true);
+    prevented=false;await s.contactTrigger.emit('click',{ctrlKey:true,preventDefault(){prevented=true;}});equal(prevented,false);
     equal(s.language.attrs.href,'en/index.html#projects');
     s.location.hash='#contact';await s.win.emit('hashchange');equal(s.language.attrs.href,'en/index.html#contact');
     await s.language.emit('click');equal(s.language.attrs.href,'en/index.html#projects');
@@ -99,6 +118,7 @@ function setup(lang, nativeDialog=true, options={}) {
     await s.win.emit('scroll');equal(s.contactLink.attrs['aria-current'],'location');
     const fallback=setup(lang,false);prevented=false;
     await fallback.chart.emit('click',{preventDefault(){prevented=true;}});equal(prevented,false);
+    await fallback.contactTrigger.emit('click',{preventDefault(){prevented=true;}});equal(prevented,false);
     fallback.navigator.clipboard=undefined;
     await fallback.copy.emit('click',{currentTarget:fallback.copy});equal(fallback.status.textContent.includes('abufanasa@gmail.com'),true);
   }
