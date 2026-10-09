@@ -186,6 +186,9 @@ dialog p { font-size: 15px; margin-top: 12px; }
 .case { padding-block: 32px 54px; }
 .back-link { color: var(--muted); font-size: 15px; padding-block: 8px; }
 .case-heading { max-width: 880px; padding-block: 32px; }
+.case-actions { align-items: flex-start; }
+.dashboard-action { flex: 0 1 430px; min-width: 0; max-width: 100%; }
+.dashboard-note { margin: 10px 0 0; font-size: 14px; line-height: 1.55; color: var(--muted); overflow-wrap: anywhere; }
 .case-heading h1 { font-size: clamp(32px,3.5vw,46px); max-width: 800px; }
 .case-lead { margin-top: 20px; max-width: 65ch; font-size: 18px; }
 .case-visual { background: var(--wash); padding: 24px; border-radius: 8px; }
