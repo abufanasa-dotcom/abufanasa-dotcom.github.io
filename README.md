@@ -51,7 +51,7 @@ These are maintenance tools. Visitors need no build system or dependencies.
 
 ## Updating projects and publishing
 
-Uploading a repository to the GitHub profile does not automatically alter this website. Project content is maintained in `scripts/build.py`: bilingual project data, contribution summaries, card metrics and dedicated case-study content. New projects require reviewed German and English copy, verified numbers, repository/demo links and genuine figures. Update the relevant templates for the new project; the card metric logic is specific to the three current projects rather than a generic repository feed. Add responsive images and their dimensions to the image manifest. Update the public CV when relevant; the source CV stays private.
+Uploading a repository to the GitHub profile does not automatically alter this website. Project content is maintained in `scripts/build.py`: bilingual project data, contribution summaries, card metrics and dedicated case-study content. New projects require reviewed German and English copy, verified numbers, repository/demo links and genuine figures. Update the relevant templates for the new project; the card metric logic is specific to the four current projects rather than a generic repository feed. Add responsive images and their dimensions to the image manifest. Update the public CV when relevant; the source CV stays private.
 
 After editing, generate the HTML and run the checks listed above. Review the changes on a branch, then merge the approved pull request into `main`. The existing GitHub Pages publishing source uses the main branch root. Pages redeploys after publishing-branch changes; a push to a separate scientific repository does not trigger a portfolio content update.
 
@@ -60,3 +60,8 @@ For routine maintenance, clone the existing repository rather than copying a ZIP
 Deployment assets: `.nojekyll`, `index.html`, `en/`, `projects/`, `css/`, `js/`, `assets/`, `legal/`, `sitemap.xml`, `robots.txt`. Scripts and review notes are maintenance source files, not browser application code.
 
 See `REVIEW.md` for source comparisons and the precise limits of completed checks. No legal or accessibility certification is claimed.
+
+
+## WindConnect
+
+Added as an independent local Modbus TCP simulation project, with German/English case studies, genuine dashboard screenshots, 60 verified automated tests and explicit local-only/emsys boundaries. The website links to installation instructions rather than a hosted application.

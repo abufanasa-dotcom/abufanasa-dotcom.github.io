@@ -33,9 +33,9 @@ class Page(HTMLParser):
 pages={};errors=[];links=0;image_candidates=0
 for p in ROOT.rglob('*.html'):
  if any(x in p.parts for x in ('_private','node_modules')):continue
- q=Page();q.feed(p.read_text());pages[p.resolve()]=q
+ q=Page();q.feed(p.read_text(encoding='utf-8'));pages[p.resolve()]=q
 for p,q in pages.items():
- name=str(p.relative_to(ROOT));raw=p.read_text();lang=q.find('html')[0].get('lang')
+ name=str(p.relative_to(ROOT));raw=p.read_text(encoding='utf-8');lang=q.find('html')[0].get('lang')
  if len(q.find('h1'))!=1:errors.append(name+': h1 count')
  if len(q.find('main'))!=1:errors.append(name+': main count')
  if len(q.ids)!=len(set(q.ids)):errors.append(name+': duplicate IDs')
@@ -117,10 +117,14 @@ for u in locations:
 for project in PROJECTS:
  for lang in ('de','en'):
   page=ROOT/(('en/' if lang=='en' else '')+'projects/'+project['slug']+'.html')
-  raw=page.read_text()
+  raw=page.read_text(encoding='utf-8')
+  if project['slug']=='windconnect':
+   for required in ('60','STALE_DATA','CONNECTION_LOST','INVALID_MEASUREMENT','127.0.0.1','emsys'):
+    if required not in raw:errors.append('WindConnect evidence missing '+required)
+   if 'windconnect.streamlit.app' in raw:errors.append('WindConnect must not advertise a hosted app')
   if project['slug']=='bess-dispatch':
    for metric in ('bess_net','bess_efc','efc_reduction','margin_reduction'):
     if num(METRICS[metric],lang,2) not in raw:errors.append('BESS shared metric '+metric)
-report={'html_pages':len(pages),'local_links_and_assets_checked':links,'responsive_image_candidates_checked':image_candidates,'pdf_pages':len(pdf.pages),'metric_rounding':'5.27% from full-precision source values','errors':errors,'browser_visual_and_native_interaction_tests':'NOT RUN: local browser access blocked in this environment','external_links':'GitHub source documents freshly checked; Streamlit/live site endpoints not rechecked'}
+report={'html_pages':len(pages),'local_links_and_assets_checked':links,'responsive_image_candidates_checked':image_candidates,'pdf_pages':len(pdf.pages),'metric_rounding':'5.27% from full-precision source values','errors':errors,'browser_visual_and_native_interaction_tests':'Not performed by this script; run the separate browser verification','external_links':'Not checked by this static validator; verify external destinations separately'}
 print(json.dumps(report,ensure_ascii=False,indent=2))
 if errors:raise SystemExit(1)
