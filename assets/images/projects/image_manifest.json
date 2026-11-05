@@ -25,7 +25,15 @@
   },
   "windconnect_stale_data.png": {
     "width": 1440,
-    "height": 737,
+    "height": 681,
+    "sizes": [
+      800,
+      1200
+    ]
+  },
+  "windconnect_stale_data_en.png": {
+    "width": 1440,
+    "height": 681,
     "sizes": [
       800,
       1200
