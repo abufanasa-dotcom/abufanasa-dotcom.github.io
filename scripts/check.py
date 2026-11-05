@@ -121,7 +121,8 @@ for project in PROJECTS:
   if project['slug']=='windconnect':
    for required in ('66','STALE_DATA','CONNECTION_LOST','INVALID_MEASUREMENT','127.0.0.1','emsys'):
     if required not in raw:errors.append('WindConnect evidence missing '+required)
-   if 'windconnect.streamlit.app' in raw:errors.append('WindConnect must not advertise a hosted app')
+   expected='https://windconnect-monitoring.streamlit.app/'+('?lang=English' if lang=='en' else '')
+   if expected not in raw:errors.append('WindConnect dashboard language link')
   if project['slug']=='bess-dispatch':
    for metric in ('bess_net','bess_efc','efc_reduction','margin_reduction'):
     if num(METRICS[metric],lang,2) not in raw:errors.append('BESS shared metric '+metric)
