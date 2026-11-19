@@ -38,5 +38,21 @@
       800,
       1200
     ]
+  },
+  "emsland_energy_de.png": {
+    "width": 1200,
+    "height": 675,
+    "sizes": [
+      800,
+      1200
+    ]
+  },
+  "emsland_energy_en.png": {
+    "width": 1200,
+    "height": 675,
+    "sizes": [
+      800,
+      1200
+    ]
   }
 }
