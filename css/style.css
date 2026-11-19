@@ -67,7 +67,6 @@ p { color: var(--muted); }
 .hero { display: grid; grid-template-columns: minmax(0,1.55fr) minmax(0,1fr); align-items: center; gap: 32px 64px; padding-block: 46px 0; }
 .hero-name { color: var(--blue); font-size: 18px; font-weight: 600; margin-bottom: 12px; }
 .hero h1 { font-size: clamp(32px, 3.4vw, 44px); letter-spacing: -.04em; }
-.hero-specialism { font-size: 19px; font-weight: 550; color: var(--ink); line-height: 1.45; margin-top: 14px; }
 .hero-lead { font-size: 17px; max-width: 60ch; margin-top: 20px; }
 .hero .actions { margin-top: 20px; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 24px; }
@@ -96,20 +95,17 @@ p { color: var(--muted); }
 .section-head { display: flex; justify-content: space-between; align-items: end; gap: 36px; margin-bottom: 28px; }
 .section-head > p { max-width: 330px; font-size: 15px; }
 .project-notes { border-top: 1px solid var(--line); }
-.notes-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
-.project-note { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: clamp(18px,3vw,28px); background: var(--paper); border: 1px solid var(--line); border-top: 3px solid var(--strong-line); border-radius: 8px; }
-.project-note h3 { font-size: clamp(20px,2.2vw,25px); overflow-wrap: anywhere; }
-.note-meta { color: var(--muted); font-size: 14px; }
-.project-note .text-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: auto; }
+.notes-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: 32px; }
+.project-note { border-top: 1px solid var(--line); padding: 8px 0 14px; }
+.project-note h3 { font-size: 17px; overflow-wrap: anywhere; text-wrap: pretty; }
+.project-note h3 a { display: block; min-height: 44px; padding-block: 10px; color: var(--blue); }
+.project-note h3 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.project-note p { font-size: 15px; line-height: 1.55; }
 .credential { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
 .credential p { font-size: 15px; }
 .credential strong { color: var(--ink); }
 .credential .text-link { display: inline-flex; align-items: center; min-height: 44px; }
 .project-grid { display: grid; gap: 24px; }
-.project-index { margin-bottom: 28px; }
-.project-index ul { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
-.project-index a { display: flex; align-items: center; min-height: 44px; height: 100%; padding: 7px 13px; border: 1px solid var(--button-border); border-radius: 6px; background: var(--paper); color: var(--blue); font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
-.project-index a:hover { background: var(--wash); border-color: var(--strong-line); }
 .project-card:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
 .project-card { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr); background: var(--paper); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .project-copy { padding: 28px; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
@@ -271,7 +267,6 @@ td { font-variant-numeric: tabular-nums; font-weight: 650; color: var(--blue); }
   .hero { grid-template-columns: 96px minmax(0,1fr); gap: 20px 16px; padding-block: 24px 20px; border-bottom: 1px solid var(--line); }
   .hero-copy { grid-column: 1 / -1; }
   .hero h1 { font-size: 34px; overflow-wrap: anywhere; }
-  .hero-specialism { font-size: 18px; margin-top: 10px; }
   .hero-lead { font-size: 16px; margin-top: 12px; }
   .hero .actions { gap: 8px 12px; }
   .hero .availability { margin-top: 14px; }
@@ -283,7 +278,6 @@ td { font-variant-numeric: tabular-nums; font-weight: 650; color: var(--blue); }
   .section { padding-block: 38px; }
   .section-head { display: block; }
   .section-head > p { margin-top: 16px; }
-  .project-index ul { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
   .project-copy { padding: 22px; }
   .project-card figure { padding: 15px; }
   .project-copy h3 { font-size: 23px; }
