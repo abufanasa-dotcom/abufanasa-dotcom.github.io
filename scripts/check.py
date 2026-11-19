@@ -7,7 +7,7 @@ from urllib.parse import urlsplit, unquote
 from decimal import Decimal, ROUND_HALF_UP
 from xml.etree import ElementTree as ET
 from pypdf import PdfReader
-from build import BASE, METRICS, WORK, PROJECTS, num
+from build import BASE, METRICS, WORK, PROJECTS, PROJECT_NOTES, TECHNICAL_SOURCES, num
 import json
 ROOT = Path(__file__).resolve().parents[1]
 VOID = {'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}
@@ -87,6 +87,12 @@ for p,q in pages.items():
  for a in q.classes('menu-toggle'):
   if 'hidden' not in a or a.get('aria-controls')!='navigation':errors.append(name+': progressive menu')
  if p.name=='index.html':
+  for anchor in ('projects','notes','experience','contact'):
+   if not q.find('a',href='#'+anchor):errors.append(name+': missing direct section link '+anchor)
+  if len(q.classes('project-note'))!=len(PROJECT_NOTES):errors.append(name+': project notes count')
+  for slug,_,titles,_,_ in PROJECT_NOTES:
+   if titles[0 if lang=='de' else 1] not in raw or len(q.find('a',href='projects/'+slug+'.html'))<2:errors.append(name+': project note link or translation '+slug)
+  if len(q.classes('credential'))!=1 or not q.find('time',datetime='2026-11-11'):errors.append(name+': SQL credential metadata')
   if len(q.classes('metric'))!=len(PROJECTS) or len(q.classes('contribution'))!=len(PROJECTS):errors.append(name+': project evidence')
   if len(q.classes('contact-option'))!=3 or len(q.classes('contact-resume'))!=1:errors.append(name+': contact cards')
   if len(q.find('a',download='Ahmed_Abufanas_Lebenslauf.pdf'))!=2:errors.append(name+': CV actions')
@@ -118,6 +124,8 @@ for project in PROJECTS:
  for lang in ('de','en'):
   page=ROOT/(('en/' if lang=='en' else '')+'projects/'+project['slug']+'.html')
   raw=page.read_text(encoding='utf-8')
+  for url,_,_ in TECHNICAL_SOURCES[project['slug']]:
+   if not pages[page.resolve()].find('a',href=url):errors.append(page.name+': missing technical source '+url)
   if project['slug']=='windconnect':
    for required in ('66','STALE_DATA','CONNECTION_LOST','INVALID_MEASUREMENT','127.0.0.1','emsys'):
     if required not in raw:errors.append('WindConnect evidence missing '+required)

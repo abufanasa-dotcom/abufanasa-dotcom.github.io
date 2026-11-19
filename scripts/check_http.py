@@ -7,7 +7,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from threading import Thread
 import json
 ROOT=Path(__file__).resolve().parents[1]
-MIMES={'.html':'text/html','.css':'text/css','.js':'text/javascript','.webp':'image/webp','.pdf':'application/pdf','.xml':'application/xml','.txt':'text/plain','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.json':'application/json'}
+MIMES={'.html':'text/html','.css':'text/css','.js':'text/javascript','.webp':'image/webp','.pdf':'application/pdf','.xml':'application/xml','.txt':'text/plain','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.json':'application/json','.zip':'application/zip'}
 files=[p for base in ['index.html','en','projects','legal','assets','css','js','sitemap.xml','robots.txt'] for p in ([ROOT/base] if (ROOT/base).is_file() else (ROOT/base).rglob('*')) if p.is_file()]
 class PreviewHandler(SimpleHTTPRequestHandler):
  extensions_map={**SimpleHTTPRequestHandler.extensions_map,**MIMES}
