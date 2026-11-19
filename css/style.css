@@ -106,6 +106,11 @@ p { color: var(--muted); }
 .credential strong { color: var(--ink); }
 .credential .text-link { display: inline-flex; align-items: center; min-height: 44px; }
 .project-grid { display: grid; gap: 24px; }
+.project-index { margin-bottom: 28px; }
+.project-index ul { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.project-index a { display: flex; align-items: center; min-height: 44px; height: 100%; padding: 7px 13px; border: 1px solid var(--button-border); border-radius: 6px; background: var(--paper); color: var(--blue); font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
+.project-index a:hover { background: var(--wash); border-color: var(--strong-line); }
+.project-card:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
 .project-card { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr); background: var(--paper); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .project-copy { padding: 28px; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
 .project-copy .eyebrow { font-size: 12px; letter-spacing: .04em; }
@@ -278,6 +283,7 @@ td { font-variant-numeric: tabular-nums; font-weight: 650; color: var(--blue); }
   .section { padding-block: 38px; }
   .section-head { display: block; }
   .section-head > p { margin-top: 16px; }
+  .project-index ul { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
   .project-copy { padding: 22px; }
   .project-card figure { padding: 15px; }
   .project-copy h3 { font-size: 23px; }
