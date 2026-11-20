@@ -155,6 +155,23 @@
     }
   });
 
+  const detailsToggle = document.querySelector('.project-details-toggle');
+  if (detailsToggle) {
+    const projectDetails = [...document.querySelectorAll('.project-details')];
+    const allOpen = () => projectDetails.every(item => item.open);
+    const updateToggle = () => {
+      detailsToggle.textContent = allOpen() ? detailsToggle.dataset.hide : detailsToggle.dataset.show;
+    };
+    projectDetails.forEach(item => item.addEventListener('toggle', updateToggle));
+    detailsToggle.addEventListener('click', () => {
+      const open = !allOpen();
+      projectDetails.forEach(item => { item.open = open; });
+      updateToggle();
+    });
+    updateToggle();
+    detailsToggle.hidden = false;
+  }
+
   const language = document.querySelector('.language');
   const sections = [...document.querySelectorAll('main > section[id]')];
   const currentSection = () => {

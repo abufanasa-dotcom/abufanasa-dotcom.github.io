@@ -106,6 +106,8 @@ p { color: var(--muted); }
 .credential strong { color: var(--ink); }
 .credential .text-link { display: inline-flex; align-items: center; min-height: 44px; }
 .project-grid { display: grid; gap: 24px; }
+.project-section-tools { max-width: 330px; font-size: 15px; }
+.project-details-toggle { min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
 .project-card:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
 .project-card { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr); background: var(--paper); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .project-copy { padding: 28px; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
@@ -113,7 +115,7 @@ p { color: var(--muted); }
 .eyebrow > span { padding-right: 10px; margin-right: 10px; border-right: 1px solid var(--line); }
 .project-copy h3 { font-size: 25px; margin-bottom: 13px; }
 .project-copy > p { font-size: 16px; line-height: 1.6; }
-.project-copy .contribution { margin-top: 14px; }
+.project-detail-body .contribution { margin-top: 14px; }
 .contribution strong { color: var(--ink); font-weight: 600; }
 .project-copy .result { margin-top: 19px; padding-left: 14px; border-left: 3px solid var(--strong-line); color: var(--ink); font-size: 16px; }
 .result .metric { display: block; color: var(--blue); font-size: 24px; line-height: 1.2; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
@@ -124,7 +126,19 @@ p { color: var(--muted); }
 .text-link, .skill-example { font-size: 15px; font-weight: 600; border-bottom: 1px solid var(--link-line); padding-block: 5px; }
 .quiet-link { color: var(--muted); font-size: 14px; padding-block: 5px; }
 .quiet-link:hover { text-decoration: underline; }
+.project-details { grid-column: 1 / -1; min-width: 0; border-top: 1px solid var(--line); }
+.project-details summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; padding: 8px 28px; color: var(--blue); background: var(--figure-surface); font-weight: 600; list-style: none; cursor: pointer; }
+.project-details summary::-webkit-details-marker { display: none; }
+.project-details summary:hover { background: var(--wash); }
+.project-details summary:focus-visible { outline: 3px solid var(--focus); outline-offset: -4px; }
+.details-chevron { flex: 0 0 8px; height: 8px; margin-right: 5px; border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.project-details[open] .details-chevron { transform: rotate(225deg); }
+.details-when-open, .project-details[open] .details-when-closed { display: none; }
+.project-details[open] .details-when-open { display: inline; }
+.project-detail-body { margin: 16px 28px 20px; padding-left: 15px; border-left: 3px solid var(--strong-line); }
+.project-detail-body .quiet-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 5px; }
 .project-card figure { padding: 22px; display: flex; flex-direction: column; justify-content: center; background: var(--figure-surface); border-left: 1px solid var(--line); min-width: 0; }
+.project-card .chart-button img { max-height: 280px; }
 .chart-button { display: block; background: #fff; color-scheme: light; padding: 12px; border: 1px solid #e0e7eb; border-radius: 5px; width: 100%; cursor: zoom-in; }
 .chart-button img { width: 100%; height: auto; object-fit: contain; }
 .zoom-label { display: block; font-size: 14px; color: var(--chart-link); text-align: right; padding-top: 10px; text-decoration: underline; text-underline-offset: 3px; }
@@ -278,6 +292,9 @@ td { font-variant-numeric: tabular-nums; font-weight: 650; color: var(--blue); }
   .section { padding-block: 38px; }
   .section-head { display: block; }
   .section-head > p { margin-top: 16px; }
+  .project-section-tools { margin-top: 12px; }
+  .project-details summary { padding-inline: 16px; }
+  .project-detail-body { margin-inline: 16px; }
   .project-copy { padding: 22px; }
   .project-card figure { padding: 15px; }
   .project-copy h3 { font-size: 23px; }
