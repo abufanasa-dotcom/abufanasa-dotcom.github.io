@@ -70,7 +70,7 @@ function setup(lang, nativeDialog=true, options={}) {
     s.colorMQ.matches=true;await s.colorMQ.emit('change',{matches:true});equal(s.root.getAttribute('data-theme'),'dark');
     await s.themeButton.emit('click');equal(s.root.getAttribute('data-theme'),'light');equal(s.stored.value,'light');equal(s.stored.key,'aa-portfolio-theme');
     await s.colorMQ.emit('change',{matches:true});equal(s.root.getAttribute('data-theme'),'light');
-    await s.themeButton.emit('click');equal(s.root.getAttribute('data-theme'),'dark');equal(s.themeMeta.getAttribute('content'),'#101923');equal(s.themeButton.getAttribute('aria-pressed'),'true');
+    await s.themeButton.emit('click');equal(s.root.getAttribute('data-theme'),'dark');equal(s.themeMeta.getAttribute('content'),'#111c1b');equal(s.themeButton.getAttribute('aria-pressed'),'true');
     equal(s.themeButton.getAttribute('title'),lang==='en'?'Switch to light theme':'Helles Design aktivieren');
     await s.win.emit('storage',{key:'aa-portfolio-theme',newValue:'light'});equal(s.root.getAttribute('data-theme'),'light');
     await s.win.emit('storage',{key:'aa-portfolio-theme',newValue:null});equal(s.root.getAttribute('data-theme'),'dark');

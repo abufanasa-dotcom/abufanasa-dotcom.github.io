@@ -10,7 +10,7 @@
   const applyTheme = theme => {
     document.documentElement.setAttribute('data-theme', theme);
     const dark = theme === 'dark';
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#101923' : '#fafbfc');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#111c1b' : '#f7f7f2');
     if (themeButton) {
       themeButton.setAttribute('aria-pressed', String(dark));
       themeButton.setAttribute('title', en
@@ -154,6 +154,23 @@
       status.textContent = (en ? 'Please select and copy: ' : 'Bitte markieren und kopieren: ') + email;
     }
   });
+
+  const detailsToggle = document.querySelector('.project-details-toggle');
+  if (detailsToggle) {
+    const projectDetails = [...document.querySelectorAll('.project-details')];
+    const allOpen = () => projectDetails.every(item => item.open);
+    const updateToggle = () => {
+      detailsToggle.textContent = allOpen() ? detailsToggle.dataset.hide : detailsToggle.dataset.show;
+    };
+    projectDetails.forEach(item => item.addEventListener('toggle', updateToggle));
+    detailsToggle.addEventListener('click', () => {
+      const open = !allOpen();
+      projectDetails.forEach(item => { item.open = open; });
+      updateToggle();
+    });
+    updateToggle();
+    detailsToggle.hidden = false;
+  }
 
   const language = document.querySelector('.language');
   const sections = [...document.querySelectorAll('main > section[id]')];
