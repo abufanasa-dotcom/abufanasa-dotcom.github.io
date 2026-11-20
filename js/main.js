@@ -10,7 +10,7 @@
   const applyTheme = theme => {
     document.documentElement.setAttribute('data-theme', theme);
     const dark = theme === 'dark';
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#101923' : '#fafbfc');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#111c1b' : '#f7f7f2');
     if (themeButton) {
       themeButton.setAttribute('aria-pressed', String(dark));
       themeButton.setAttribute('title', en
