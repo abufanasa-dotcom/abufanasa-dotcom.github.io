@@ -237,9 +237,17 @@ figcaption { color: var(--muted); font-size: 14px; line-height: 1.55; margin-top
 .contact { background: var(--wash); border: 1px solid var(--line); border-radius: 12px; padding: 24px; margin-bottom: 38px; }
 .contact h2 { font-size: clamp(28px,2.5vw,33px); }
 .contact-intro { font-size: 15px; margin-top: 6px; }
-.contact-options { margin-top: 14px; }
-.contact-options .button { background: var(--paper); }
-.contact-options .button:hover { background: var(--band); border-color: var(--strong-line); }
+.contact-options { grid-template-columns: repeat(3,minmax(0,var(--action-width))); margin-top: 14px; }
+.contact-options .contact-option {
+  display: grid;
+  grid-template-columns: 18px 3.5rem;
+  align-content: center;
+  gap: 8px;
+  text-align: start;
+  background: var(--paper);
+}
+.contact-option svg { display: block; width: 18px; height: 18px; color: var(--blue); }
+.contact-option:hover { background: var(--band); border-color: var(--strong-line); }
 .copy-status { font-size: 13px; min-height: 21px; margin-top: 4px; overflow-wrap: anywhere; }
 .header-controls { display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: auto; }
 .theme-toggle { display: grid; place-items: center; width: 44px; height: 44px; padding: 10px; color: var(--ink); background: var(--paper); border: 1px solid var(--button-border); border-radius: 50%; }
@@ -315,9 +323,6 @@ td { font-variant-numeric: tabular-nums; font-weight: 650; color: var(--blue); }
   .social-nav { display: none; }
   .hero { column-gap: 36px; }
 }
-@media (min-width: 961px) {
-  .contact-options { grid-template-columns: repeat(4,minmax(0,var(--action-width))); }
-}
 @media (max-width: 960px) {
   .header-inner { flex-wrap: wrap; gap: 12px; padding-block: 12px; min-height: 72px; }
   #navigation { width: 100%; flex-wrap: wrap; gap: 4px clamp(10px,3vw,22px); padding-block: 8px; }
@@ -377,6 +382,14 @@ td { font-variant-numeric: tabular-nums; font-weight: 650; color: var(--blue); }
 @media (max-width: 420px) {
   .brand .monogram { display: none; }
   .header-controls { gap: 6px; }
+  .contact-options { gap: 8px; }
+  .contact-options .contact-option {
+    grid-template-columns: minmax(0,1fr);
+    justify-items: center;
+    gap: 4px;
+    min-height: 58px;
+    text-align: center;
+  }
 }
 @media print {
   .site-header, .footer, dialog, .actions, .hero-actions, .back-link, .zoom-label, .contact { display: none !important; }

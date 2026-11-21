@@ -94,8 +94,8 @@ for p,q in pages.items():
    if titles[0 if lang=='de' else 1] not in raw or len(q.find('a',href='projects/'+slug+'.html'))<2:errors.append(name+': project note link or translation '+slug)
   if len(q.classes('credential'))!=1 or not q.find('time',datetime='2026-11-11'):errors.append(name+': SQL credential metadata')
   if len(q.classes('metric'))!=len(PROJECTS) or len(q.classes('contribution'))!=len(PROJECTS):errors.append(name+': project evidence')
-  if len(q.classes('contact-option'))!=3 or len(q.classes('contact-resume'))!=1:errors.append(name+': contact cards')
-  if len(q.find('a',download='Ahmed_Abufanas_Lebenslauf.pdf'))!=2:errors.append(name+': CV actions')
+  if len(q.classes('contact-option'))!=3:errors.append(name+': contact links')
+  if len(q.find('a',download='Ahmed_Abufanas_Lebenslauf.pdf'))!=1:errors.append(name+': CV action')
   if not q.schemas or q.schemas[0]['mainEntity']['name']!='Ahmed Abufanas':errors.append(name+': profile schema')
   for key,precision in [('efc_reduction',2)]:
    if num(METRICS[key],lang,precision) not in raw:errors.append(name+': metric '+key)
