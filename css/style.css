@@ -161,9 +161,8 @@ p { color: var(--muted); }
 .contribution strong { color: var(--ink); font-weight: 600; }
 .project-copy .result { margin-top: 13px; padding-left: 14px; border-left: 3px solid var(--strong-line); color: var(--ink); font-size: 16px; }
 .project-copy .actions { margin-top: 14px; }
-.result .metric { display: block; color: var(--blue); font-size: clamp(24px,2.65vw,38px); line-height: 1.1; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
+.result .metric { display: block; color: var(--copper); font-size: clamp(24px,2.65vw,38px); line-height: 1.1; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
 .project-grid > .project-card .result { border-left-color: var(--copper); }
-.project-grid > .project-card .metric { color: var(--copper); }
 .result > span { display: block; margin-top: 6px; }
 .project-copy .scope { font-size: 14px; margin-top: 12px; }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
