@@ -248,6 +248,11 @@ figcaption { color: var(--muted); font-size: 14px; line-height: 1.55; margin-top
 }
 .contact-option svg { display: block; width: 18px; height: 18px; color: var(--blue); }
 .contact-option:hover { background: var(--band); border-color: var(--strong-line); }
+@media (min-width: 701px) {
+  .contact { text-align: center; }
+  .contact-intro { text-wrap: balance; }
+  .contact-options { justify-content: center; }
+}
 .copy-status { font-size: 13px; min-height: 21px; margin-top: 4px; overflow-wrap: anywhere; }
 .header-controls { display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: auto; }
 .theme-toggle { display: grid; place-items: center; width: 44px; height: 44px; padding: 10px; color: var(--ink); background: var(--paper); border: 1px solid var(--button-border); border-radius: 50%; }
