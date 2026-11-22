@@ -36,6 +36,27 @@
     applyTheme(themeOverride || (colorPreference.matches ? 'dark' : 'light'));
   });
 
+  const expandableSections = new Map();
+  for (const button of document.querySelectorAll('.section-toggle')) {
+    const panel = document.getElementById(button.getAttribute('aria-controls'));
+    const section = button.closest('section[id]');
+    const label = button.querySelector('.section-toggle-label');
+    if (!panel || !section || !label) continue;
+    const setExpanded = expanded => {
+      panel.hidden = !expanded;
+      button.setAttribute('aria-expanded', String(expanded));
+      label.textContent = expanded ? button.dataset.hide : button.dataset.show;
+    };
+    const hash = '#' + section.id;
+    expandableSections.set(hash, () => setExpanded(true));
+    setExpanded(location.hash === hash);
+    button.addEventListener('click', () => setExpanded(panel.hidden));
+    button.hidden = false;
+  }
+  if (expandableSections.size) {
+    window.addEventListener('hashchange', () => expandableSections.get(location.hash)?.());
+  }
+
   const menu = document.querySelector('.menu-toggle');
   const nav = document.querySelector('#navigation');
   const desktop = window.matchMedia('(min-width: 961px)');
@@ -55,6 +76,7 @@
     nav.addEventListener('click', event => {
       const anchor = event.target.closest('a');
       if (!anchor) return;
+      expandableSections.get(anchor.hash)?.();
       const wasOpen = nav.classList.contains('open');
       closeMenu();
       // Move focus to the destination before hiding the focused mobile link.

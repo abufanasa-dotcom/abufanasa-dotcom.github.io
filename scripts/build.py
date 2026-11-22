@@ -203,6 +203,15 @@ TECHNICAL_SOURCES = {
  ],
 }
 
+def section_toggle_header(section_id,title,show,hide):
+ return f'''<div class="section-head section-toggle-head">
+ <h2 id="{section_id}-title">{esc(title)}</h2>
+ <button class="section-toggle" type="button" aria-controls="{section_id}-content"
+  aria-expanded="true" aria-describedby="{section_id}-title" data-show="{esc(show)}" data-hide="{esc(hide)}" hidden>
+  <span class="section-toggle-label">{esc(hide)}</span><span class="details-chevron" aria-hidden="true"></span>
+ </button>
+ </div>'''
+
 def project_notes(lang):
  cards=[]
  for slug,title,summary in PROJECT_NOTES:
@@ -210,9 +219,31 @@ def project_notes(lang):
   <h3>{link('projects/'+slug+'.html',esc(text(title,lang))+' <span aria-hidden="true">→</span>')}</h3>
   <p>{esc(text(summary,lang))}</p>
   </article>''')
- return f'''<section class="container section project-notes" id="notes" aria-labelledby="notes-title">
- <div class="section-head"><h2 id="notes-title">{tr(lang,'Projektnotizen','Project notes')}</h2></div>
- <div class="notes-grid">{''.join(cards)}</div>
+ header=section_toggle_header('notes',tr(lang,'Projektnotizen','Project notes'),
+  tr(lang,'Notizen anzeigen','Show notes'),tr(lang,'Notizen ausblenden','Hide notes'))
+ return f'''<section class="container section project-notes section-fold" id="notes" aria-labelledby="notes-title">
+ {header}
+ <div class="notes-grid section-content" id="notes-content">{''.join(cards)}</div>
+ </section>'''
+
+def skill_section(lang):
+ skills=[
+  ('01',tr(lang,'Messdatenanalyse','Measurement data analysis'),'Python · SQL · pandas · MATLAB',
+   tr(lang,'Datenqualität, Signalverarbeitung und statistische Auswertung.','Data quality, signal processing and statistical analysis.'),'#p1-card'),
+  ('02',tr(lang,'Systemmodellierung','System modeling'),'SciPy / HiGHS · Simulink · SolidWorks',
+   tr(lang,'Optimierung, physikalische Modelle und technische Simulation.','Optimization, physical models and engineering simulation.'),'#p2-card'),
+  ('03',tr(lang,'Technische Kommunikation','Technical communication'),'Git · LaTeX · Excel · OriginPro',
+   tr(lang,'Nachvollziehbare Abläufe, Visualisierung und Dokumentation.','Traceable workflows, visualization and documentation.'),'#work-baches'),
+ ]
+ cards=''.join(f'''<article><span class="skill-number">{number}</span><h3>{title}</h3>
+ <p>{description}</p><p class="tool-list">{tools}</p>
+ {link(example,tr(lang,'Beispiel ansehen','View example')+' →','skill-example')}</article>'''
+  for number,title,tools,description,example in skills)
+ header=section_toggle_header('skills',tr(lang,'Werkzeuge & Arbeitsweise','Tools & approach'),
+  tr(lang,'Details anzeigen','Show details'),tr(lang,'Details ausblenden','Hide details'))
+ return f'''<section class="container section skills section-fold" id="skills" aria-labelledby="skills-title">
+ {header}
+ <div class="skills-grid section-content" id="skills-content">{cards}</div>
  </section>'''
 
 def technical_sources(p,lang):
@@ -319,11 +350,11 @@ def home(lang):
  project_pairs=''.join(f'<div class="project-pair">{"".join(cards[start:start+2])}</div>' for start in range(1,len(cards),2))
  project_cards=cards[0]+project_pairs
  education=tr(lang,'<h3>Masterstudium Ingenieurphysik (laufend)</h3><p>Universität Oldenburg · seit 10/2025<br>Abschluss voraussichtlich 02/2028</p><h3>B.Eng. Ingenieurphysik</h3><p>Universität Oldenburg · 10/2015–02/2025<br>Abschlussarbeit: Binaural Detection and Auditory Modelling of Bandwidth Effects</p>','<h3>Master’s studies in Engineering Physics</h3><p>University of Oldenburg · since 10/2025<br>Expected completion 02/2028</p><h3>B.Eng. Engineering Physics</h3><p>University of Oldenburg · 10/2015–02/2025<br>Thesis: Binaural Detection and Auditory Modelling of Bandwidth Effects</p>')
- skills=[('01',tr(lang,'Messdatenanalyse','Measurement data analysis'),'Python · SQL · pandas · MATLAB',tr(lang,'Datenqualität, Signalverarbeitung und statistische Auswertung.','Data quality, signal processing and statistical analysis.')),('02',tr(lang,'Systemmodellierung','System modeling'),'SciPy / HiGHS · Simulink · SolidWorks',tr(lang,'Optimierung, physikalische Modelle und technische Simulation.','Optimization, physical models and engineering simulation.')),('03',tr(lang,'Technische Kommunikation','Technical communication'),'Git · LaTeX · Excel · OriginPro',tr(lang,'Nachvollziehbare Abläufe, Visualisierung und Dokumentation.','Traceable workflows, visualization and documentation.'))]
+
  body=f'''<main id="main"><section class="container hero" id="top"><div class="hero-copy"><div class="hero-identity"><p class="hero-name">Ahmed Abufanas</p><h1>{tr(lang,'Ingenieurphysiker (B.Eng.)','Engineering Physics (B.Eng.)')}</h1></div><div class="hero-intro"><p class="hero-lead">{tr(lang,'Ich untersuche technische Fragestellungen mit Messdaten, physikalischen Modellen und Simulationen. Je nach Aufgabe arbeite ich mit Python, SQL oder MATLAB.','I use measurement data, physical models, and simulations to investigate engineering problems. Depending on the task, I work with Python, SQL, or MATLAB.')}</p><p class="hero-lead">{tr(lang,'Ich bin offen für unterschiedliche technische Aufgaben, bei denen ich mein Studium der Ingenieurphysik und meine praktische Erfahrung einbringen kann.','I’m open to a range of technical roles where I can apply my engineering physics background and practical experience.')}</p><div class="hero-actions">{link('#projects',tr(lang,'Projekte','View projects'),'button primary')}{cv_link(prefix,lang)}</div><p class="availability"><span aria-hidden="true"></span><span class="availability-text">{tr(lang,'Offen für den Berufseinstieg · Deutschlandweit umzugsbereit','Open to early-career roles · Willing to relocate within Germany')}</span></p></div></div><div class="portrait"><img src="{prefix}assets/images/ahmed-abufanas.jpg" alt="Ahmed Abufanas" width="1086" height="1448" fetchpriority="high"></div>{profile_highlights(lang)}</section><section class="container section" id="projects"><div class="section-head project-section-head"><div><h2>{tr(lang,'Projekte','Projects')}</h2><p>{tr(lang,'Fünf eigenständige Fallstudien mit Ergebnissen, Quellcode und Angaben zur Methodik.','Five independent case studies with results, source code, and methods.')}</p></div>
  <button class="project-details-toggle" type="button" hidden
  data-show="{tr(lang,'Alle Details anzeigen','Show all details')}"
- data-hide="{tr(lang,'Alle Details ausblenden','Hide all details')}">{tr(lang,'Alle Details anzeigen','Show all details')}</button></div><div class="project-grid">{project_cards}</div></section>{project_notes(lang)}<section class="experience-band" id="experience"><div class="container section"><div class="section-head"><h2>{tr(lang,'Berufserfahrung & Ausbildung','Experience & Education')}</h2></div><div class="experience-grid"><div class="work-history"><p class="eyebrow">{tr(lang,'BERUFSERFAHRUNG','EXPERIENCE')}</p>{''.join(f'<article class="work-item" id="{['work-baches','work-buddy','work-binaural'][j]}"><span class="date">{w["date"]}</span><h3>{text(w["title"],lang)}</h3><p class="institution">{w["place"]}</p><p>{text(w["description"],lang)}</p></article>' for j,w in enumerate(WORK))}</div><aside class="education" id="education"><p class="eyebrow">{tr(lang,'AUSBILDUNG','EDUCATION')}</p>{education}<div class="languages"><h3>{tr(lang,'Sprachen','Languages')}</h3><p>{tr(lang,'Deutsch & Englisch: sehr gute Kenntnisse<br>Arabisch: Muttersprache','German & English: strong proficiency<br>Arabic: native')}</p></div>{certification(lang)}</aside></div></div></section><section class="container section skills" id="skills"><p class="eyebrow">{tr(lang,'WERKZEUGE & ARBEITSWEISE','TOOLS & APPROACH')}</p><div class="skills-grid">{''.join(f'<article><span class="skill-number">{n}</span><h3>{t}</h3><p>{d}</p><p class="tool-list">{tools}</p>{link(['#p1-card','#p2-card','#work-baches'][int(n)-1],tr(lang,'Beispiel ansehen','View example')+' →','skill-example')}</article>' for n,t,tools,d in skills)}</div></section>{contact_section(lang)}</main>'''
+ data-hide="{tr(lang,'Alle Details ausblenden','Hide all details')}">{tr(lang,'Alle Details anzeigen','Show all details')}</button></div><div class="project-grid">{project_cards}</div></section>{project_notes(lang)}<section class="experience-band" id="experience"><div class="container section"><div class="section-head"><h2>{tr(lang,'Berufserfahrung & Ausbildung','Experience & Education')}</h2></div><div class="experience-grid"><div class="work-history"><p class="eyebrow">{tr(lang,'BERUFSERFAHRUNG','EXPERIENCE')}</p>{''.join(f'<article class="work-item" id="{['work-baches','work-buddy','work-binaural'][j]}"><span class="date">{w["date"]}</span><h3>{text(w["title"],lang)}</h3><p class="institution">{w["place"]}</p><p>{text(w["description"],lang)}</p></article>' for j,w in enumerate(WORK))}</div><aside class="education" id="education"><p class="eyebrow">{tr(lang,'AUSBILDUNG','EDUCATION')}</p>{education}<div class="languages"><h3>{tr(lang,'Sprachen','Languages')}</h3><p>{tr(lang,'Deutsch & Englisch: sehr gute Kenntnisse<br>Arabisch: Muttersprache','German & English: strong proficiency<br>Arabic: native')}</p></div>{certification(lang)}</aside></div></div></section>{skill_section(lang)}{contact_section(lang)}</main>'''
  path='index.html' if lang=='de' else 'en/index.html'
  write(path,shell(title,desc,body,lang,path,prefix,'en/index.html' if lang=='de' else '../index.html'))
 def detail(p,lang):
